@@ -9,10 +9,13 @@ import hashlib
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# Inicializar la base de datos al iniciar la aplicación
-@app.before_first_request
+# Inicializar la base de datos al crear la aplicación
 def initialize_database():
-    init_db()
+    with app.app_context():
+        init_db()
+
+# Llamar a la inicialización inmediatamente después de crear la app
+initialize_database()
 
 def generate_otp():
     return ''.join(random.choices(string.digits, k=6))
@@ -133,7 +136,7 @@ def recharge(card_id):
         return redirect(url_for('dashboard'))
     if request.method == 'POST':
         amount = float(request.form['amount'])
-        payment_method = request.form['payment_method']
+        payment_method = request.form('payment_method')
         if amount % 20 != 0:
             cursor.close()
             flash('El monto debe ser múltiplo de RD$20.')
