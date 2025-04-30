@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Panel de Control</h2>
+    <p>Bienvenido, {{ user[2] }}</p>
+    <h3>Tus Tarjetas</h3>
+    <ul>
+        {% for card in cards %}
+            <li>
+                Tarjeta: {{ card[2][-8:] }} | Saldo: RD${{ card[3] }}
+                <a href="{{ url_for('recharge', card_id=card[2]) }}">Recargar</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <p><a href="{{ url_for('add_card') }}">Agregar Nueva Tarjeta</a></p>
+{% endblock %}

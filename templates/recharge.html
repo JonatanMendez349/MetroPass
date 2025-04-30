@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Recargar Tarjeta</h2>
+    <p>Tarjeta: {{ card[2][-8:] }} | Saldo Actual: RD${{ card[3] }}</p>
+    <form method="POST">
+        <label for="amount">Monto (RD$, múltiplos de 20):</label>
+        <input type="number" id="amount" name="amount" min="20" step="20" required>
+        <label for="payment_method">Método de Pago:</label>
+        <select id="payment_method" name="payment_method" required>
+            <option value="paypal">PayPal</option>
+            <option value="credit_card">Tarjeta de Crédito</option>
+        </select>
+        <button type="submit">Recargar</button>
+    </form>
+{% endblock %}

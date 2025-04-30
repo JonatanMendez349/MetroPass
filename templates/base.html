@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro de Santo Domingo - Recarga</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Metro de Santo Domingo - Recarga Online</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                {% if session.user_id %}
+                    <li><a href="{{ url_for('dashboard') }}">Panel</a></li>
+                    <li><a href="{{ url_for('history') }}">Historial</a></li>
+                    <li><a href="{{ url_for('balance') }}">Saldo</a></li>
+                    <li><a href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('register') }}">Registrarse</a></li>
+                    <li><a href="{{ url_for('login') }}">Iniciar Sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>© 2025 Metro de Santo Domingo</p>
+    </footer>
+</body>
+</html>

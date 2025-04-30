@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Historial de Transacciones</h2>
+    <table>
+        <tr>
+            <th>Tarjeta</th>
+            <th>Monto</th>
+            <th>Método</th>
+            <th>ID Transacción</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+        </tr>
+        {% for t in transactions %}
+            <tr>
+                <td>{{ t[9][-8:] }}</td>
+                <td>RD${{ t[3] }}</td>
+                <td>{{ t[4] }}</td>
+                <td>{{ t[5] }}</td>
+                <td>{{ t[6] }}</td>
+                <td>{{ t[7] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

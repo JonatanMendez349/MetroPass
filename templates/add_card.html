@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Agregar Tarjeta</h2>
+    <form method="POST">
+        <label for="card_id">ID de la Tarjeta:</label>
+        <input type="text" id="card_id" name="card_id" required>
+        <button type="submit">Agregar</button>
+    </form>
+{% endblock %}

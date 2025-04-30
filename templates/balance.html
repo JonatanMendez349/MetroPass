@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Consulta de Saldo</h2>
+    <ul>
+        {% for card in cards %}
+            <li>Tarjeta: {{ card[2][-8:] }} | Saldo: RD${{ card[3] }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
