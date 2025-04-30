@@ -39,5 +39,5 @@ def init_db():
     cursor.close()
 
 def get_db():
-    conn = psycopg2.connect(os.getenv('postgresql://postgres:wjsWcIgFUQLUKPptqFKuFSZWzIxEYUIJ@postgres.railway.internal:5432/railway'))
+    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
     return conn
