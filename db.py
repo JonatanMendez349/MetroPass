@@ -39,5 +39,5 @@ def init_db():
     cursor.close()
 
 def get_db():
-    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
-    return conn
+    dsn = "postgresql://postgres:wjsWcIgFUQLUKPptqFKuFSZWzIxEYUIJ@gondola.proxy.rlwy.net:28274/railway"
+    return psycopg2.connect(dsn)
