@@ -123,31 +123,36 @@ def add_card():
 def recharge(card_id):
     if 'user_id' not in session:
         return redirect(url_for('login'))
+
     db = get_db()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM cards WHERE card_id = %s AND user_id = %s', (card_id, session['user_id']))
     card = cursor.fetchone()
+    
     if not card:
         cursor.close()
         flash('Tarjeta no encontrada.')
         return redirect(url_for('dashboard'))
+
     if request.method == 'POST':
         amount = float(request.form['amount'])
-        payment_method = request.form('payment_method')
         if amount % 20 != 0:
             cursor.close()
             flash('El monto debe ser múltiplo de RD$20.')
             return redirect(url_for('recharge', card_id=card_id))
-        payment_result = process_payment(amount, payment_method)
-        if payment_result['status'] == 'success':
-            cursor.execute('UPDATE cards SET balance = balance + %s WHERE card_id = %s', (amount, card_id))
-            cursor.execute('INSERT INTO transactions (user_id, card_id, amount, payment_method, transaction_id, status, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-                           (session['user_id'], card_id, amount, payment_method, payment_result['transaction_id'], 'completed', datetime.utcnow()))
-            db.commit()
-            flash('¡Recarga exitosa!')
-            cursor.close()
-            return redirect(url_for('dashboard'))
-        flash('El pago falló.')
+
+        # Simular recarga exitosa sin método de pago real
+        fake_transaction_id = f"SIM{random.randint(1000, 9999)}"
+        payment_method = "Simulado"
+
+        cursor.execute('UPDATE cards SET balance = balance + %s WHERE card_id = %s', (amount, card_id))
+        cursor.execute('INSERT INTO transactions (user_id, card_id, amount, payment_method, transaction_id, status, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                       (session['user_id'], card_id, amount, payment_method, fake_transaction_id, 'completed', datetime.utcnow()))
+        db.commit()
+        cursor.close()
+        flash('¡Recarga simulada exitosa!')
+        return redirect(url_for('dashboard'))
+
     cursor.close()
     return render_template('recharge.html', card=card)
 
