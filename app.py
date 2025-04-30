@@ -60,12 +60,9 @@ def login():
         user = cursor.fetchone()
         cursor.close()
         if user:
-            otp = generate_otp()
-            session['otp'] = otp
-            session['email'] = email
-            print(f"OTP para {email}: {otp}")  # En producción, enviar por correo/SMS
-            flash('Se envió un OTP a tu correo/teléfono. Por favor, ingrésalo.')
-            return redirect(url_for('verify_otp'))
+            session['user_id'] = user[0]
+        flash('¡Inicio de sesión exitoso!')
+        return redirect(url_for('dashboard'))
         flash('Correo no encontrado.')
     return render_template('login.html')
 
