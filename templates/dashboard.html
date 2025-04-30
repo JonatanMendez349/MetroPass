@@ -1,15 +1,83 @@
 {% extends 'base.html' %}
+
 {% block content %}
     <h2>Panel de Control</h2>
     <p>Bienvenido, {{ user[2] }}</p>
     <h3>Tus Tarjetas</h3>
-    <ul>
+    <div class="card-container">
         {% for card in cards %}
-            <li>
-                Tarjeta: {{ card[2][-8:] }} | Saldo: RD${{ card[3] }}
-                <a href="{{ url_for('recharge', card_id=card[2]) }}">Recargar</a>
-            </li>
+            <div class="card">
+                <div class="card-header">
+                    <span>Tarjeta: {{ card[2][-8:] }}</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Saldo:</strong> RD${{ card[3] }}</p>
+                    <a href="{{ url_for('recharge', card_id=card[2]) }}" class="recharge-btn">Recargar</a>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
     <p><a href="{{ url_for('add_card') }}">Agregar Nueva Tarjeta</a></p>
+
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #004aad;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-body {
+            margin-bottom: 1rem;
+        }
+
+        .card-body p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .recharge-btn {
+            background-color: #004aad;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .recharge-btn:hover {
+            background-color: #003780;
+        }
+
+        @media (max-width: 600px) {
+            .card-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
 {% endblock %}
